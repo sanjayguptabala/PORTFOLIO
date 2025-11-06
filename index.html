@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanjay Gupta | Frontend Developer Portfolio</title>
+    <!-- Load Tailwind for modern, responsive utility classes --><script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#0E1B2D', // Deep Navy (richer)
+                        'secondary-yellow': '#FFC300', // Bright Gold/Yellow accent
+                        'bg-light': '#FAFBFC', // Whiter main background
+                        'bg-secondary-light': '#E7EEF5', // Subtle contrast section background
+                        'text-dark': '#1f2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Load Bootstrap 5 CSS for components and layout --><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom styles to integrate with Tailwind aesthetic --><style>
+        /* General body styling */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FAFBFC; /* Use bg-light */
+            color: #1f2937;
+            scroll-behavior: smooth;
+        }
+        /* Overriding Bootstrap primary color for better aesthetic integration */
+        .btn-primary {
+            --bs-btn-bg: #0E1B2D;
+            --bs-btn-border-color: #0E1B2D;
+            --bs-btn-hover-bg: #1D3A58;
+            --bs-btn-hover-border-color: #1D3A58;
+            --bs-btn-active-bg: #0C1827;
+            --bs-btn-active-border-color: #0C1827;
+        }
+        /* Overriding secondary button for contact section */
+        .btn-secondary-yellow {
+            --bs-btn-color: #0E1B2D;
+            --bs-btn-bg: #FFC300;
+            --bs-btn-border-color: #FFC300;
+            --bs-btn-hover-color: #0E1B2D;
+            --bs-btn-hover-bg: #FFD750;
+            --bs-btn-hover-border-color: #FFD750;
+        }
+        /* Section padding */
+        .section-padding {
+            padding: 5rem 0;
+        }
+        /* Project and Skill Card Hover Effect (Applied to all content cards) */
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(14, 27, 45, 0.15); /* Stronger Shadow */
+        }
+
+        /* --- Creative Hero Image Styling --- */
+        .hero-visual-box {
+            position: relative;
+            width: 300px; 
+            height: 300px;
+            margin: 0 auto;
+        }
+        .hero-image-container {
+            position: absolute;
+            top: 20px; 
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%; 
+            overflow: hidden;
+            border: 5px solid white; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+            z-index: 10;
+            transition: transform 0.3s ease-in-out;
+        }
+        .hero-image-container:hover {
+             transform: scale(1.05); /* Slight scale for creative photo focus */
+        }
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center; 
+        }
+        .hero-accent-box {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 80%; 
+            height: 80%; 
+            background-color: #FFC300; 
+            border-radius: 12px; 
+            z-index: 5;
+            transform: rotate(-5deg); 
+            transition: box-shadow 0.3s ease;
+        }
+        .hero-accent-box:hover {
+             box-shadow: 0 15px 30px rgba(255, 195, 0, 0.5); 
+        }
+        @media (min-width: 992px) { 
+            .hero-visual-box {
+                width: 350px; 
+                height: 350px;
+                margin: 0 0 0 auto; 
+            }
+            .hero-image-container {
+                 top: 30px; 
+                 left: 30px;
+            }
+        }
+        /* Styling for the loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #0E1B2D;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
+
+    <!-- 1. Navigation Bar (Bootstrap) --><nav id="mainNav" class="navbar navbar-expand-lg navbar-dark bg-primary-blue sticky-top shadow-xl">
+        <div class="container px-4">
+            <a class="navbar-brand font-bold text-xl" href="#home">Sanjay Gupta B</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto space-x-2">
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:text-secondary-yellow" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:text-secondary-yellow" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:text-secondary-yellow" href="#education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:text-secondary-yellow" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white hover:text-secondary-yellow" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. Hero Section - More Creative, Split Layout --><header id="home" class="d-flex align-items-center bg-bg-light min-h-screen py-16">
+        <div class="container px-4">
+            <div class="row align-items-center flex-column-reverse flex-lg-row">
+                
+                <!-- Text Content Column -->
+                <div class="col-lg-7 text-center text-lg-start order-last order-lg-first">
+                    <p class="text-secondary-yellow text-lg font-semibold mb-2">Hello, I'm</p>
+                    <h1 class="display-3 font-extrabold text-text-dark mb-4 leading-tight">Sanjay Gupta B.</h1>
+                    <h2 class="text-3xl font-semibold text-primary-blue mb-4">Frontend Web Developer</h2>
+                    <p class="lead text-gray-700 mb-6 max-w-lg mx-auto mx-lg-0 border-l-4 border-secondary-yellow pl-4">
+                        A <span class="font-bold">passionate developer</span> dedicated to crafting intuitive, visually appealing, and responsive web experiences using React.js, Bootstrap, and core web technologies.
+                    </p>
+                    <div class="space-x-4 flex justify-center lg:justify-start">
+                        <a href="#projects" class="btn btn-primary btn-lg rounded-full px-6 shadow-lg transform hover:scale-105 transition duration-300">View My Work</a>
+                        <a href="mailto:sanjayguptabala@gmail.com" class="btn btn-outline-primary btn-lg rounded-full px-6 shadow-lg transform hover:scale-105 transition duration-300">Email Me</a>
+                        <!-- Resume Download link in Hero Section (using generic path) -->
+                        <a href="assets/Frontend_ Developer.pdf" class="btn btn-secondary-yellow btn-lg rounded-full px-6 font-bold text-primary-blue shadow-lg transform hover:scale-105 transition duration-300" target="_blank" rel="noopener">Download Resume</a>
+                    </div>
+                </div>
+
+                <!-- Image Column (Creative Visual) --><div class="col-lg-5 text-center mt-12 mt-lg-0 order-first order-lg-last">
+                    <div class="hero-visual-box">
+                        <!-- Angular Accent Box -->
+                        <div class="hero-accent-box"></div> 
+                        <!-- Photo Container -->
+                        <div class="hero-image-container">
+                            <!-- Placeholder image URL -->
+                            <img src="photo.png" alt="Sanjay Gupta B Profile" class="hero-image">
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. Skills Section --><section id="skills" class="section-padding bg-bg-secondary-light">
+        <div class="container px-4">
+            <h2 class="text-center display-5 font-bold mb-3 text-primary-blue">Technical Skills</h2>
+            <p class="text-center text-gray-600 mb-10 max-w-2xl mx-auto">
+                A snapshot of the technologies I use to build robust and responsive user interfaces.
+            </p>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Skill Card: HTML & CSS --><div class="col-md-6 col-lg-3">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-md h-full d-flex flex-column items-center text-center">
+                        <span class="text-5xl text-orange-500 mb-3">
+                            <!-- Icon for HTML/CSS --><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M2.872 2.058h18.256l-1.554 17.519L11.996 22l-7.5-2.423zM8.36 8.356l.169 2.031l5.856.002l-.37 3.596l-3.693 1.137l-3.8-.002l-.25-2.827h2.09l.138 1.487l2.008-.62l2.057-.63l.182-1.928H7.747l-.147-1.636h8.216l.32-3.722z"/></svg>
+                        </span>
+                        <h3 class="text-xl font-semibold text-text-dark mb-2">HTML & CSS</h3>
+                        <p class="text-gray-500 text-sm flex-grow">
+                            Expertise in structuring web content and styling modern, cross-browser compatible layouts.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Skill Card: JavaScript --><div class="col-md-6 col-lg-3">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-md h-full d-flex flex-column items-center text-center">
+                        <span class="text-5xl text-yellow-400 mb-3">
+                            <!-- Icon for JavaScript --><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm3.3 15.3l-3.6-2.1a1 1 0 0 1-.5-.8v-5a1 1 0 0 1 2 0v4.2l3.1 1.8a1 1 0 1 1-1 1.7z"/></svg>
+                        </span>
+                        <h3 class="text-xl font-semibold text-text-dark mb-2">JavaScript (Basic)</h3>
+                        <p class="text-gray-500 text-sm flex-grow">
+                            Basic knowledge of DOM manipulation and adding interactivity to web pages.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Skill Card: React.js --><div class="col-md-6 col-lg-3">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-md h-full d-flex flex-column items-center text-center">
+                        <span class="text-5xl text-blue-500 mb-3">
+                            <!-- Icon for React --><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8s8 3.59 8 8s-3.59 8-8 8zm4.4-11.4l-4-4a1 1 0 0 0-1.4 0l-4 4a1 1 0 0 0 0 1.4l4 4a1 1 0 0 0 1.4 0l4-4a1 1 0 0 0 0-1.4zM12 17a1 1 0 1 1 0-2a1 1 0 0 1 0 2zm3.7-5.7l-3.1 3.1a1 1 0 0 1-1.4 0l-3.1-3.1a1 1 0 0 1 1.4-1.4l2.4 2.4l2.4-2.4a1 1 0 0 1 1.4 1.4z"/></svg>
+                        </span>
+                        <h3 class="text-xl font-semibold text-text-dark mb-2">React.js</h3>
+                        <p class="text-gray-500 text-sm flex-grow">
+                            Experience in building interactive, component-based UIs for modern applications.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Skill Card: Bootstrap --><div class="col-md-6 col-lg-3">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-md h-full d-flex flex-column items-center text-center">
+                        <span class="text-5xl text-purple-600 mb-3">
+                            <!-- Icon for Bootstrap --><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm0 15c-1.49 0-2.8-1.02-3.16-2.5h6.32c-.36 1.48-1.67 2.5-3.16 2.5zm3.16-4.5H8.84c.36-1.48 1.67-2.5 3.16-2.5s2.8 1.02 3.16 2.5zM12 7.5a1 1 0 1 1 0 2a1 1 0 0 1 0-2z"/></svg>
+                        </span>
+                        <h3 class="text-xl font-semibold text-text-dark mb-2">Bootstrap 5</h3>
+                        <p class="text-gray-500 text-sm flex-grow">
+                            Proficient in using the framework for rapid and high-quality mobile-first responsive design.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Education & Certifications Section --><section id="education" class="section-padding bg-bg-light">
+        <div class="container px-4">
+            <h2 class="text-center display-5 font-bold mb-3 text-primary-blue">Education & Certifications</h2>
+            <p class="text-center text-gray-700 mb-10 max-w-2xl mx-auto">
+                My academic journey and dedication to continuous skill acquisition.
+            </p>
+
+            <div class="row g-4 justify-content-center">
+                <!-- Education Card --><div class="col-lg-6">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-xl border-t-4 border-primary-blue h-full">
+                        <div class="d-flex items-center mb-3">
+                             <span class="text-3xl text-primary-blue me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M5 20h14v-2H5zm14-9h-4V7h-2v4H5l7 7z"/></svg>
+                            </span>
+                            <h3 class="text-xl font-bold text-text-dark">B.E., Computer Science and Engineering</h3>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700 mb-1">Rajalakshmi Institute of Technology, Chennai</p>
+                        <p class="text-sm text-gray-500 mb-3">2023 - Present</p>
+                        <ul class="list-disc ps-4 text-gray-600 space-y-1">
+                            <li><span class="font-semibold">CGPA:</span> 8.2/10</li>
+                            <li>Focus on Data Structures, Algorithms, and Software Development lifecycle.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Certifications Card --><div class="col-lg-6">
+                    <div class="card-hover-effect bg-white p-6 rounded-xl shadow-xl border-t-4 border-secondary-yellow h-full">
+                        <div class="d-flex items-center mb-3">
+                            <span class="text-3xl text-secondary-yellow me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-2v2h2v2H7v-2h2v-2H7v-2h10z"/></svg>
+                            </span>
+                            <h3 class="text-xl font-bold text-text-dark">Professional Certifications</h3>
+                        </div>
+                        <p class="text-lg font-semibold text-gray-700 mb-1">Key Frontend & Backend Skills</p>
+                        <p class="text-sm text-gray-500 mb-3">Infosys, Great Learning, Udemy</p>
+                        <ul class="list-disc ps-4 text-gray-600 space-y-1">
+                            <li><span class="font-semibold">Core:</span> JavaScript & React (Great Learning)</li>
+                            <li><span class="font-semibold">Fundamentals:</span> HTML & CSS (Udemy)</li>
+                            <li><span class="font-semibold">Backend:</span> Java (Infosys)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Projects Section --><section id="projects" class="section-padding bg-bg-secondary-light">
+        <div class="container px-4">
+            <h2 class="text-center display-5 font-bold mb-3 text-primary-blue">Featured Projects</h2>
+            <p class="text-center text-gray-700 mb-10 max-w-2xl mx-auto">
+                Here are a couple of projects showcasing my capabilities in frontend development and full-stack integration.
+            </p>
+
+            <div class="row g-5">
+                <!-- Project 1: Portfolio Website --><div class="col-lg-6">
+                    <div class="card-hover-effect project-card bg-white p-6 rounded-xl shadow-xl border-l-8 border-secondary-yellow h-full" id="project-portfolio">
+                        <h3 class="text-2xl font-bold text-text-dark mb-2">1. Portfolio Website (This!)</h3>
+                        <p class="text-primary-blue font-medium mb-3">HTML | CSS | JavaScript | Bootstrap</p>
+                        <p class="text-gray-700 mb-4">
+                            A fully responsive personal portfolio built from scratch to showcase key skills, certifications, and projects. It emphasizes clean UI/UX and mobile-first design principles.
+                        </p>
+                        <ul class="list-disc ps-4 text-gray-600 space-y-1 mb-4">
+                            <li><span class="font-semibold">Responsiveness:</span> Utilized Bootstrap 5 utility classes and components for seamless display across all devices.</li>
+                            <li><span class="font-semibold">Deployment:</span> Successfully deployed on GitHub Pages for public access and demonstration.</li>
+                            <li><span class="font-semibold">Interactivity:</span> Includes smooth scroll functionality and responsive navigation.</li>
+                        </ul>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a href="#" class="btn btn-sm btn-primary rounded-full font-semibold">View Live <span class="ms-1">&#8599;</span></a>
+                            <a href="https://github.com/sanjayguptabala" class="btn btn-sm btn-outline-dark rounded-full">GitHub Repo</a>
+                            <!-- GEMINI BUTTON -->
+                            <button onclick="showAnalysis('Portfolio Website', 'A responsive personal portfolio built with HTML, CSS, JavaScript, and Bootstrap 5. Emphasizes clean UI/UX and mobile-first design. Key features: Responsiveness, smooth scrolling, modern UI.', this)" 
+                                class="btn btn-sm text-primary-blue bg-secondary-yellow rounded-full font-bold shadow-md hover:bg-yellow-400 transition duration-300">
+                                ✨ Future Scope Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Online Banking Management System --><div class="col-lg-6">
+                    <div class="card-hover-effect project-card bg-white p-6 rounded-xl shadow-xl border-l-8 border-primary-blue h-full" id="project-banking">
+                        <h3 class="text-2xl font-bold text-text-dark mb-2">2. Online Banking Management System</h3>
+                        <p class="text-primary-blue font-medium mb-3">React.js | Java | SQL</p>
+                        <p class="text-gray-700 mb-4">
+                            A simulated full-stack application for managing bank accounts, demonstrating skills in both frontend component architecture and basic backend data handling.
+                        </p>
+                        <ul class="list-disc ps-4 text-gray-600 space-y-1 mb-4">
+                            <li><span class="font-semibold">Frontend:</span> Developed interactive account management and transaction UIs using React.js components.</li>
+                            <li><span class="font-semibold">Full-Stack:</span> Integrated the frontend with Java/SQL for data storage and retrieval (mocked for this demo).</li>
+                            <li><span class="font-semibold">Features:</span> Implemented mock features for checking balances, depositing, and withdrawing funds.</li>
+                        </ul>
+                        <div class="d-flex flex-wrap gap-2 mt-4">
+                            <a href="#" class="btn btn-sm btn-primary rounded-full font-semibold">View Mock Demo <span class="ms-1">&#8599;</span></a>
+                            <a href="https://github.com/sanjayguptabala" class="btn btn-sm btn-outline-dark rounded-full">GitHub Repo</a>
+                            <!-- GEMINI BUTTON -->
+                            <button onclick="showAnalysis('Online Banking Management System', 'Simulated full-stack app for account management using React.js for frontend and Java/SQL for data handling. Key features: Check balance, deposit, withdrawal, transaction history.', this)" 
+                                class="btn btn-sm text-primary-blue bg-secondary-yellow rounded-full font-bold shadow-md hover:bg-yellow-400 transition duration-300">
+                                ✨ Future Scope Analysis
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Contact Section --><section id="contact" class="section-padding bg-primary-blue text-white">
+        <div class="container px-4">
+            <div class="text-center mb-10">
+                <h2 class="display-5 font-bold mb-3 text-secondary-yellow">Get in Touch</h2>
+                <p class="text-white opacity-90 max-w-xl mx-auto">
+                    I am actively looking for Frontend Developer roles. Feel free to connect via email or LinkedIn!
+                </p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form id="contactForm">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label font-medium">Name</label>
+                                <input type="text" class="form-control rounded-lg p-3 border-0" id="name" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label font-medium">Email Address</label>
+                                <input type="email" class="form-control rounded-lg p-3 border-0" id="email" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="subject" class="form-label font-medium">Subject</label>
+                                <input type="text" class="form-control rounded-lg p-3 border-0" id="subject" required>
+                            </div>
+                            <div class="col-12">
+                                <label for="message" class="form-label font-medium">Message</label>
+                                <textarea class="form-control rounded-lg p-3 border-0" id="message" rows="5" required></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-secondary-yellow btn-lg rounded-full px-8 font-bold text-primary-blue shadow-lg transform hover:scale-105 transition duration-300">
+                                    Send Message
+                                </button>
+                                <!-- Resume Download link in Contact Section (subtle) -->
+                                <a href="assets/Frontend_ Developer.pdf" class="btn btn-outline-light btn-sm ms-3 mt-2 mt-lg-0 rounded-full" target="_blank" rel="noopener">Download Resume (PDF)</a>
+                                <div id="formMessage" class="mt-3 text-sm font-medium" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for LLM Output (Replaces alert()) -->
+    <div class="modal fade" id="llmAnalysisModal" tabindex="-1" aria-labelledby="llmAnalysisModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content rounded-xl shadow-2xl">
+                <div class="modal-header bg-primary-blue text-white rounded-t-xl border-0">
+                    <h5 class="modal-title font-bold" id="llmAnalysisModalLabel">AI Analysis</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-5 bg-bg-light">
+                    <h6 class="text-xl font-semibold mb-3 text-text-dark" id="modalProjectTitle"></h6>
+                    <p class="text-sm font-medium text-gray-500 mb-4">Generated by Gemini AI:</p>
+                    <div id="modalAnalysisContent" class="text-gray-700 bg-white p-4 rounded-lg border border-gray-200">
+                        <!-- Content goes here -->
+                    </div>
+                </div>
+                <div class="modal-footer bg-white rounded-b-xl border-t">
+                    <button type="button" class="btn btn-sm btn-outline-dark rounded-full" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 7. Footer --><footer class="bg-gray-900 py-4 text-center text-white">
+        <div class="container px-4">
+            <p class="mb-0 text-sm opacity-75">&copy; 2025 Sanjay Gupta B. All Rights Reserved. | Built with HTML, Bootstrap & JavaScript</p>
+            <div class="mt-2 space-x-4">
+                <a href="https://linkedin.com/in/sanjayguptabala" class="text-gray-400 hover:text-secondary-yellow transition duration-300" target="_blank">LinkedIn</a>
+                <a href="https://github.com/sanjayguptabala" class="text-gray-400 hover:text-secondary-yellow transition duration-300" target="_blank">GitHub</a>
+                <a href="mailto:sanjayguptabala@gmail.com" class="text-gray-400 hover:text-secondary-yellow transition duration-300">Email</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap 5 JS Bundle --><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Custom JavaScript for smooth scrolling, form handling, and GEMINI API calls -->
+    <script>
+        // --- GEMINI API Configuration and Functions ---
+        const API_MODEL = 'gemini-2.5-flash-preview-09-2025';
+        const apiKey = ""; 
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${API_MODEL}:generateContent?key=${apiKey}`;
+
+        /**
+         * Generic function to call the Gemini API with exponential backoff.
+         * @param {string} userQuery - The prompt for the model.
+         * @param {string} systemPrompt - Instructions for the model's behavior.
+         * @param {number} maxRetries - Maximum number of retries.
+         * @returns {Promise<string>} The generated text.
+         */
+        async function generateContent(userQuery, systemPrompt, maxRetries = 5) {
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429 && i < maxRetries - 1) {
+                        // Too many requests - wait and retry
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text || 'Error: Could not retrieve analysis.';
+                    return text.trim();
+
+                } catch (error) {
+                    console.error("API call failed:", error);
+                    // On final try, re-throw the error
+                    if (i === maxRetries - 1) throw error; 
+                }
+            }
+            throw new Error('API failed after multiple retries.');
+        }
+
+        /**
+         * Handles the button click, calls Gemini, and displays the result in a modal.
+         * @param {string} projectTitle - The title of the project.
+         * @param {string} projectDescription - The core description of the project.
+         * @param {HTMLElement} button - The button element that was clicked.
+         */
+        async function showAnalysis(projectTitle, projectDescription, button) {
+            const modalEl = document.getElementById('llmAnalysisModal');
+            const modalTitleEl = document.getElementById('modalProjectTitle');
+            const contentEl = document.getElementById('modalAnalysisContent');
+            
+            // Set up modal elements for loading state
+            modalTitleEl.textContent = `Future Scope for: ${projectTitle}`;
+            contentEl.innerHTML = '<div class="d-flex items-center text-primary-blue"><div class="spinner"></div> Generating analysis...</div>';
+
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+
+            const originalButtonText = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<div class="spinner"></div> Analyzing...';
+
+            const systemPrompt = "You are a professional software development analyst. Your task is to analyze a brief project summary and provide a concise, three-point list of potential **Future Scope** or **Next Steps** for improvement. Do not include any introductory or concluding sentences. Only output the numbered list.";
+            const userQuery = `Analyze the following project description and suggest future scope/next steps:\n\nPROJECT: ${projectTitle}\nDESCRIPTION: ${projectDescription}`;
+
+            try {
+                const result = await generateContent(userQuery, systemPrompt);
+                
+                // Format the text result into a clean list for the modal
+                contentEl.innerHTML = result.replace(/\n/g, '<br>');
+                
+            } catch (error) {
+                contentEl.innerHTML = `<strong>Error during analysis:</strong> The AI service is currently unavailable. Please try again later.`;
+                console.error("Gemini analysis error:", error);
+            } finally {
+                // Restore button state
+                button.innerHTML = originalButtonText;
+                button.disabled = false;
+            }
+        }
+
+        // --- Standard JavaScript Functions (From previous versions) ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling logic
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.getAttribute('href') !== '#') {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+
+                        const navbarCollapse = document.getElementById('navbarNav');
+                        if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                            const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                            bsCollapse.hide();
+                        }
+                    }
+                });
+            });
+
+            // Contact Form Submission Handler
+            const contactForm = document.getElementById('contactForm');
+            const formMessage = document.getElementById('formMessage');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    
+                    formMessage.textContent = 'Thank you for your message! I will get back to you soon.';
+                    formMessage.classList.remove('text-red-500', 'text-warning');
+                    formMessage.classList.add('text-secondary-yellow');
+                    formMessage.style.display = 'block';
+
+                    contactForm.reset();
+
+                    setTimeout(() => {
+                        formMessage.style.display = 'none';
+                    }, 5000);
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
